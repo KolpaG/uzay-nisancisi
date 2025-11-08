@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    /* Uzay Teması için koyu arka plan */
+    background: #0d001a; 
+    font-family: 'Press Start 2P', cursive; /* Retro piksel fontu */
+    overflow: hidden; 
+}
+
+/* Basit bir yıldız efekti için animasyonlu arka plan */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Yıldız alanını daha yoğun yapalım */
+    background: radial-gradient(circle, #2a004a 0%, rgba(0,0,0,0) 70%), 
+                repeating-linear-gradient(0deg, transparent, transparent 1px, #1a0033 1px, #1a0033 2px),
+                /* İkinci bir yıldız katmanı */
+                radial-gradient(circle at 10% 50%, rgba(255, 255, 255, 0.1) 1px, transparent 40px);
+    opacity: 0.9;
+    z-index: -1;
+    animation: star-move 60s linear infinite; 
+}
+
+@keyframes star-move {
+    /* Daha yavaş hareket */
+    from { background-position: 0 0; }
+    to { background-position: 0 2000px; }
+}
+
+.game-container {
+    /* Derinlik ve retro makine hissi için kalın çerçeve */
+    box-shadow: 0 0 50px rgba(0, 255, 255, 0.9), 0 0 20px rgba(0, 255, 255, 0.6) inset; 
+    border: 8px solid #00ffff;
+    border-radius: 10px;
+    position: relative;
+    background-color: #000000; 
+    overflow: hidden;
+}
+
+#gameCanvas {
+    display: block;
+    /* Hafif bir retro ekran efekti */
+    filter: brightness(1.1) contrast(1.1);
+}
+
+/* Skor ve Rekor stilleri */
+#score, #highScore {
+    position: absolute;
+    top: 15px;
+    /* Piksel fontu kullanıyoruz */
+    font-family: 'Press Start 2P', cursive; 
+    font-size: 16px; /* Piksel fontu için daha küçük boyut */
+    font-weight: normal;
+    
+    color: #ff00ff; 
+    /* Daha belirgin neon gölge */
+    text-shadow: 0 0 7px #ff00ff, 0 0 15px rgba(255, 0, 255, 0.8);
+    
+    padding: 8px 15px;
+    background: rgba(0, 0, 0, 0.7); /* Daha koyu şeffaf arka plan */
+    border: 2px solid #ff00ff;
+    border-radius: 3px;
+    
+    /* Hafifçe yanıp sönme efekti */
+    animation: neon-pulse 3s infinite alternate; 
+}
+
+#score {
+    left: 10px;
+}
+
+#highScore {
+    right: 10px;
+    color: #00ffff; 
+    text-shadow: 0 0 7px #00ffff, 0 0 15px rgba(0, 255, 255, 0.8);
+    border: 2px solid #00ffff;
+}
+
+@keyframes neon-pulse {
+    0% { opacity: 0.9; }
+    100% { opacity: 1; }
+}
