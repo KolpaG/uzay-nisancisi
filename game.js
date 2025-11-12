@@ -1,3 +1,15 @@
+// --- YENİ KONTROL DEĞİŞKENLERİ ---
+const controlSelectionOverlay = document.getElementById('control-selection-overlay');
+const btnPc = document.getElementById('btn-pc');
+const btnMobil = document.getElementById('btn-mobil');
+
+const mobileControlsContainer = document.getElementById('mobile-controls-container');
+const btnMobilLeft = document.getElementById('btn-mobil-left');
+const btnMobilRight = document.getElementById('btn-mobil-right');
+const btnMobilShoot = document.getElementById('btn-mobil-shoot');
+
+let controlMode = null; // 'pc' veya 'mobil'
+
 // Canvas ve context'i al
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
@@ -52,26 +64,56 @@ const keys = {
 };
 
 document.addEventListener('keydown', (e) => {
-    if (keys.hasOwnProperty(e.code)) {
+    // PC kontrolleri SADECE pc modunda çalışsın
+    if (controlMode === 'pc' && keys.hasOwnProperty(e.code)) {
         keys[e.code] = true;
     }
-    // Oyun bittiğinde 'R' tuşu ile yeniden başlat
+    // 'R' ile yeniden başlatma her zaman çalışsın (PC'de olanlar için)
     if (isGameOver && e.code === 'KeyR') {
         resetGame();
     }
 });
 
 document.addEventListener('keyup', (e) => {
-    if (keys.hasOwnProperty(e.code)) {
+    // PC kontrolleri SADECE pc modunda çalışsın
+    if (controlMode === 'pc' && keys.hasOwnProperty(e.code)) {
         keys[e.code] = false;
     }
 });
 
 // --- Fare Tıklaması ile Ateş Etme (Mouse1) ---
 canvas.addEventListener('click', (e) => {
+    // PC mouse tıklaması SADECE pc modunda çalışsın
+    if (controlMode === 'pc' && !isGameOver) {
+        shootBullet();
+    }
+});
+
+// --- YENİ EKLENDİ: Mobil Kontrol Dinleyicileri ---
+// Dokunma başladığında tuşu aktif et
+btnMobilLeft.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // Ekranın kaymasını engelle
+    keys.KeyA = true;
+});
+btnMobilRight.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keys.KeyD = true;
+});
+btnMobilShoot.addEventListener('touchstart', (e) => {
+    e.preventDefault();
     if (!isGameOver) {
         shootBullet();
     }
+});
+
+// Dokunma bittiğinde tuşu bırak
+btnMobilLeft.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keys.KeyA = false;
+});
+btnMobilRight.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keys.KeyD = false;
 });
 
 function shootBullet() {
@@ -145,7 +187,7 @@ function updatePlayer() {
     if (keys.KeyD && player.x < GAME_WIDTH - player.width) {
         player.x += player.speed;
     }
-    // Ateş etme mantığı mouse click olayına taşındı.
+    // Ateş etme mantığı mouse click ve mobil tuş olaylarına taşındı.
 }
 
 // Mermileri güncelle (Hareket ve ekran dışına çıkma)
@@ -221,7 +263,7 @@ function checkCollisions() {
     });
 }
 
-// Oyun Bitti Ekranı (Değişmedi)
+// Oyun Bitti Ekranı
 function gameOver() {
     isGameOver = true;
     ctx.fillStyle = 'rgba(0, 0, 0, 0.9)';
@@ -239,7 +281,7 @@ function gameOver() {
     ctx.fillText('Yeniden Başlamak İçin "R" Tuşuna Basın', GAME_WIDTH / 2, GAME_HEIGHT / 2 + 120);
 }
 
-// Oyunu sıfırla ve yeniden başlat (Değişmedi)
+// Oyunu sıfırla ve yeniden başlat
 function resetGame() {
     score = 0;
     scoreElement.textContent = `Skor: 0`;
@@ -270,5 +312,23 @@ function gameLoop() {
     }
 }
 
-// Oyunu Başlat
-gameLoop();
+// --- YENİ EKLENDİ: Oyun Başlatma Mantığı ---
+
+function initializeGame(mode) {
+    controlMode = mode;
+    
+    // Seçim ekranını gizle
+    controlSelectionOverlay.style.display = 'none';
+
+    if (mode === 'mobil') {
+        // Mobil kontrolleri göster
+        mobileControlsContainer.style.display = 'block';
+    }
+    
+    // Her şey hazır, ana döngüyü başlat
+    gameLoop();
+}
+
+// Seçim butonlarına tıklama olaylarını ekle
+btnPc.addEventListener('click', () => initializeGame('pc'));
+btnMobil.addEventListener('click', () => initializeGame('mobil'));

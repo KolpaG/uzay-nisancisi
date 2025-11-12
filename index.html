@@ -7,10 +7,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <div id="control-selection-overlay">
+        <div class="selection-box">
+            <h2>Kontrol Tipini Seçin</h2>
+            <button id="btn-pc">PC (Klavye/Mouse)</button>
+            <button id="btn-mobil">Mobil (Dokunmatik)</button>
+        </div>
+    </div>
+
     <div class="game-container">
         <canvas id="gameCanvas" width="800" height="600"></canvas>
         <div id="score">Skor: 0</div>
-        <div id="highScore">Rekor: 0</div> 
+        <div id="highScore">Rekor: 0</div>
+
+        <div id="mobile-controls-container">
+            <div class="movement-controls">
+                <button id="btn-mobil-left">◀</button>
+                <button id="btn-mobil-right">▶</button>
+            </div>
+            <div class="action-controls">
+                <button id="btn-mobil-shoot">ATEŞ</button>
+            </div>
+        </div>
     </div>
 
     <script src="game.js"></script>

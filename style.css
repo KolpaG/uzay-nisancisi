@@ -89,3 +89,128 @@ body::before {
     0% { opacity: 0.9; }
     100% { opacity: 1; }
 }
+
+/* --- YENİ EKLENDİ: Kontrol Seçim Ekranı --- */
+#control-selection-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    font-family: 'Press Start 2P', cursive;
+    color: #fff;
+    text-align: center;
+}
+
+.selection-box {
+    padding: 30px;
+    background: #111;
+    border: 4px solid #00ffff;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
+}
+
+.selection-box h2 {
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+    margin-bottom: 25px;
+    font-size: 18px;
+}
+
+.selection-box button {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 16px;
+    background: #333;
+    color: #fff;
+    border: 2px solid #fff;
+    padding: 15px 20px;
+    margin: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.selection-box button:hover {
+    background: #00ffff;
+    color: #000;
+    border-color: #00ffff;
+    box-shadow: 0 0 20px #00ffff;
+}
+
+
+/* --- YENİ EKLENDİ: Mobil Kontrol Tuşları --- */
+#mobile-controls-container {
+    /* Başlangıçta gizli */
+    display: none; 
+    
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; /* Tüm alanı kapla ki tuşları yerleştirebilelim */
+    pointer-events: none; /* Konteynerin kendisi tıklanamaz olsun */
+    z-index: 10;
+}
+
+#mobile-controls-container button {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 24px;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.7);
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%; /* Yuvarlak tuşlar */
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    
+    /* Dokunmatik cihazlarda basılı tutarken mavi seçimi engelle */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    /* Tıklanabilir alanı aç */
+    pointer-events: auto; 
+}
+
+/* Tuşlara basılma efekti */
+#mobile-controls-container button:active {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.movement-controls {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+}
+
+#btn-mobil-left {
+    margin-right: 90px; /* Sağ tuşla arasında boşluk */
+}
+#btn-mobil-right {
+    /* Pozisyonu left'e göre ayarlı */
+}
+
+.action-controls {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+}
+
+#btn-mobil-shoot {
+    font-size: 16px;
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 0, 0, 0.2);
+    border-color: rgba(255, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#btn-mobil-shoot:active {
+     background: rgba(255, 0, 0, 0.4);
+}
